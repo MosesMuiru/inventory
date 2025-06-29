@@ -1,23 +1,35 @@
-name: Run Lint
-on:
-  push:
-    branches-ignore:
-      - main
+
+name: Go
+on: [push]
 
 jobs:
-  linting:
+  build:
     runs-on: ubuntu-latest
+
     steps:
+      # ✅ Use the correct version of actions/checkout
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.24
+      # ✅ Go setup
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with: 
+          go-version: '1.24.0'
 
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v4
-        with:
-          version: latest
-          args: --timeout 5m
+      # ✅ Install dependencies (modern Go doesn’t need go get if go.mod is present)
+      - name: Download dependencies
+        run: go mod download
+
+      # ✅ Run all tests with verbose output across all packages
+      - name: Run all tests
+        run: go test -v ./...
+
+      # ✅ Build all packages (if your project supports recursive build)
+      - name: Build
+        run: go build -v ./...
+
+      # 🔁 Optional duplicate test step; remove or combine
+      # If you already ran tests above, this may be redundant.
+      # Removing this step.
+
