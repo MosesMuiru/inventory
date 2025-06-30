@@ -3,7 +3,7 @@
 use jwt to create a auth
     email
     username
-    password
+    hashedPassword
 
 store where each user has an account
     store_name
