@@ -22,14 +22,9 @@ jobs:
         run: go mod download
 
       # ✅ Run all tests with verbose output across all packages
-      - name: Run all tests
-        run: go test -v ./...
-
-      # ✅ Build all packages (if your project supports recursive build)
       - name: Build
         run: go build -v ./...
 
-      # 🔁 Optional duplicate test step; remove or combine
-      # If you already ran tests above, this may be redundant.
-      # Removing this step.
+      - name: Run all tests
+        run: go test -v ./...
 
